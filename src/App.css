@@ -1,0 +1,11 @@
+body {
+  background: #282a36;
+}
+
+.editor {
+  font-size: 1.2em;
+}
+
+.CodeMirror {
+  height: auto;
+}
