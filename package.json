@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "babel-standalone": "^6.25.0",
     "codemirror": "^5.26.0",
     "react": "^15.5.4",
     "react-codemirror": "^1.0.0",
