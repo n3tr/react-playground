@@ -1,19 +1,21 @@
 import React from 'react';
-import ReactDOMServer from "react-dom/server";
+import ReactDOM from "react-dom";
 import * as Babel from "babel-standalone";
 import CodeMirror from 'react-codemirror';
 import 'codemirror/mode/jsx/jsx';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/dracula.css';
 
+import { createIframe, addPreviewDiv } from 'utils/frame';
+
 function appendLineNumber() {
     return {
         visitor: {
             CallExpression(path) {
-                if(path.node.callee.name === 'run') {
+                if (path.node.callee.name === 'run') {
                     console.log(path)
                     const { end } = path.node.loc;
-                    path.node.arguments = path.node.arguments.concat([{ type: 'NumericLiteral', value: end.line}])
+                    path.node.arguments = path.node.arguments.concat([{ type: 'NumericLiteral', value: end.line }])
                 }
             }
         }
@@ -27,13 +29,14 @@ const log = console.log;
 export default class Editor extends React.Component {
     currentWidgets = []
     state = {
-        code: 
-`// Hello Component
+        error: null,
+        code:
+        `// Hello Component
 
 class Hello extends React.Component {
-    render() {
-        return <h1>Hello</h1>
-    }
+  render() {
+    return <h1>Hello</h1>
+  }
 }
 
 run(<Hello />)
@@ -47,67 +50,79 @@ run(<Hello />)
     }
 
     _run(element, line) {
-        
-        const previewDom = this._createPreviewElement(element)
         const codeMirror = this.codemirror.getCodeMirror()
         const codeMirrorDocument = codeMirror.doc
 
+        const previewIframe = createIframe(() => {
+            console.log("DDD")
+            const previewDiv = addPreviewDiv(previewIframe);
+            ReactDOM.render(element, previewDiv, () => {
+                previewIframe.width  = previewIframe.contentWindow.document.body.scrollWidth;
+                previewIframe.height = previewIframe.contentWindow.document.body.scrollHeight;
+            });
+        })  
 
-        const addedWidget = codeMirrorDocument.addLineWidget(line - 1 , previewDom)
-        this.currentWidgets.push(addedWidget)
-        
-        
-        // doc.addlineWidget(line, )
+        const widget = codeMirrorDocument.addLineWidget(line - 1, previewIframe, { coverGutter: false })      
+        this.currentWidgets.push(widget)
     }
 
     _clearAllWidgets() {
         const codeMirror = this.codemirror.getCodeMirror()
         const codeMirrorDocument = codeMirror.doc
 
-        this.currentWidgets.forEach( widget => {
+        this.currentWidgets.forEach(widget => {
             codeMirrorDocument.removeLineWidget(widget)
         })
 
         this.currentWidgets = []
     }
 
-    _createPreviewElement(reactElement) {
-        const htmlText = ReactDOMServer.renderToStaticMarkup(reactElement)
-        const div = document.createElement('div');
-        div.innerHTML = htmlText
-        return div
-    }
-
     _executeCode = () => {
         this._clearAllWidgets()
         const { code } = this.state;
-        const compiledCode = this._compileCode(code);
-        eval(compiledCode).apply(null, [this._run.bind(this), React])
-        
+        try {
+            const compiledCode = this._compileCode(code);
+            eval(compiledCode).apply(null, [this._run.bind(this), React])
+            this.setState({
+                error: null
+            })
+        } catch (error) {
+            this.setState({
+                error: error
+            })
+        }
+
     }
 
     _compileCode(code) {
-        const compiled =  Babel.transform(
-            code, 
-            { presets: ['es2015', 'react'], plugins: ['appendLineNumber'] }).code
+        const compiled = Babel.transform(
+            code,
+            { presets: ['es2015', 'stage-1', 'react'], plugins: ['appendLineNumber'] }).code
         return `((run, React) => { ${compiled} });`
     }
-    
+
     render() {
         return (
             <div className="editor">
-                <div className="editor-console">
+                <div className="console-pane">
                     <button onClick={this._executeCode}>Run</button>
                 </div>
-                <CodeMirror 
-                ref={(codemirror) => { this.codemirror = codemirror; }}
-                value={this.state.code} 
-                onChange={this.updateCode}
-                options={{
-                    mode: 'jsx',
-                    lineNumbers: true,
-                    theme: 'dracula'
-                }} />
+                <div className="editor-pane">
+                    <CodeMirror
+                        ref={(codemirror) => { this.codemirror = codemirror; }}
+                        value={this.state.code}
+                        onChange={this.updateCode}
+                        options={{
+                            mode: 'jsx',
+                            lineNumbers: true,
+                            theme: 'dracula'
+                        }} />
+                </div>
+                <div className="error-pane">
+                    <span dangerouslySetInnerHTML={
+                        { __html: this.state.error ? this.state.error : null }
+                    } />
+                </div>
             </div>
         )
     }

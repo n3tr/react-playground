@@ -3,7 +3,38 @@ body {
 }
 
 .editor {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin-right: -20px;
+}
+
+.editor-pane {
   font-size: 1.2em;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.error-pane {
+  color: #ccc;
+  font-family: monospace;
+  max-height: 80px;
+  margin-right: -20px;
+  overflow-y: auto;
+}
+
+.error-pane h1 {
+  font-size: 1em;
+  margin: 0;
+}
+
+.error-pane ul {
+  margin: 0;
+  padding: 0;
 }
 
 .CodeMirror {
