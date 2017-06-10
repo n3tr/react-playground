@@ -5,7 +5,6 @@ import CodeMirror from 'react-codemirror';
 import 'codemirror/mode/jsx/jsx';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/dracula.css';
-
 import { createIframe, addPreviewDiv } from 'utils/frame';
 
 function appendLineNumber() {
@@ -13,9 +12,8 @@ function appendLineNumber() {
         visitor: {
             CallExpression(path) {
                 if (path.node.callee.name === 'run') {
-                    console.log(path)
                     const { end } = path.node.loc;
-                    path.node.arguments = path.node.arguments.concat([{ type: 'NumericLiteral', value: end.line }])
+                    path.node.arguments.push({ type: 'NumericLiteral', value: end.line })
                 }
             }
         }
@@ -35,7 +33,11 @@ export default class Editor extends React.Component {
 
 class Hello extends React.Component {
   render() {
-    return <h1>Hello</h1>
+    return (
+      <div>
+        <h1>Hello</h1>
+      </div>
+    ) 
   }
 }
 
@@ -54,15 +56,14 @@ run(<Hello />)
         const codeMirrorDocument = codeMirror.doc
 
         const previewIframe = createIframe(() => {
-            console.log("DDD")
             const previewDiv = addPreviewDiv(previewIframe);
             ReactDOM.render(element, previewDiv, () => {
-                previewIframe.width  = previewIframe.contentWindow.document.body.scrollWidth;
+                previewIframe.width = previewIframe.contentWindow.document.body.scrollWidth;
                 previewIframe.height = previewIframe.contentWindow.document.body.scrollHeight;
             });
-        })  
+        })
 
-        const widget = codeMirrorDocument.addLineWidget(line - 1, previewIframe, { coverGutter: false })      
+        const widget = codeMirrorDocument.addLineWidget(line - 1, previewIframe, { coverGutter: false })
         this.currentWidgets.push(widget)
     }
 
@@ -97,7 +98,11 @@ run(<Hello />)
     _compileCode(code) {
         const compiled = Babel.transform(
             code,
-            { presets: ['es2015', 'stage-1', 'react'], plugins: ['appendLineNumber'] }).code
+            {
+                presets: ['es2015', 'stage-1', 'react'],
+                plugins: ['appendLineNumber']
+            }
+        ).code
         return `((run, React) => { ${compiled} });`
     }
 

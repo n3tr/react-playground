@@ -22,6 +22,7 @@ export function addPreviewDiv(iframe) {
     outerDiv.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
     outerDiv.style.padding = '12px';
     outerDiv.style.borderRadius = '8px';
+    outerDiv.style.color = '#EEE';
     
 
     var div = iframe.contentDocument.createElement('div');
