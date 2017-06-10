@@ -6,20 +6,7 @@ import 'codemirror/mode/jsx/jsx';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/dracula.css';
 import { createIframe, addPreviewDiv } from 'utils/frame';
-
-function appendLineNumber() {
-    return {
-        visitor: {
-            CallExpression(path) {
-                if (path.node.callee.name === 'run') {
-                    const { end } = path.node.loc;
-                    path.node.arguments.push({ type: 'NumericLiteral', value: end.line })
-                }
-            }
-        }
-    }
-}
-
+import { appendLineNumber } from 'utils/babel-apply-line-number';
 Babel.registerPlugin('appendLineNumber', appendLineNumber);
 
 const log = console.log;
@@ -29,19 +16,38 @@ export default class Editor extends React.Component {
     state = {
         error: null,
         code:
-        `// Hello Component
+        `// Hello
 
-class Hello extends React.Component {
+const Hello = ({ name }) => <h1>Hello, { name }</h1>
+
+// Use run(...) for inline preview
+run(<Hello />)
+
+// -------
+
+// Counter
+
+class Counter extends React.Component {
+  state = { count: 0 }
+  increase = () => {
+	this.setState({ count: this.state.count + 1 })
+  }
+  decrease = () => {
+    this.setState({ count: this.state.count - 1 })
+  }
   render() {
     return (
       <div>
-        <h1>Hello</h1>
+        <div><h1>{ this.state.count }</h1></div>
+        <button onClick={this.decrease}>-</button>
+        <button onClick={this.increase}>+</button>
       </div>
-    ) 
+    )
   }
 }
 
-run(<Hello />)
+run(<Counter />)
+
 `,
     }
 
@@ -57,10 +63,20 @@ run(<Hello />)
 
         const previewIframe = createIframe(() => {
             const previewDiv = addPreviewDiv(previewIframe);
-            ReactDOM.render(element, previewDiv, () => {
-                previewIframe.width = previewIframe.contentWindow.document.body.scrollWidth;
-                previewIframe.height = previewIframe.contentWindow.document.body.scrollHeight;
-            });
+            try {
+                previewIframe.height = 0
+                ReactDOM.render(element, previewDiv, () => {
+                    previewIframe.width = previewIframe.contentWindow.document.body.scrollWidth;
+                    previewIframe.height = previewIframe.contentWindow.document.body.scrollHeight + 10;
+                }); 
+            } catch (error) {
+                // TODO: Display better error for each preview
+                ReactDOM.render(<div>{ error.message }</div>, previewDiv, () => {
+                    previewIframe.width = previewIframe.contentWindow.document.body.scrollWidth;
+                    previewIframe.height = previewIframe.contentWindow.document.body.scrollHeight + 10;
+                })
+            }
+            
         })
 
         const widget = codeMirrorDocument.addLineWidget(line - 1, previewIframe, { coverGutter: false })
@@ -88,6 +104,7 @@ run(<Hello />)
                 error: null
             })
         } catch (error) {
+            // TODO: Need to format error
             this.setState({
                 error: error
             })
