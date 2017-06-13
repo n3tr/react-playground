@@ -1,5 +1,100 @@
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  font-family: Helvetica, Arial, sans-serif;
 }
+
+body {
+  background: #282a36;
+}
+
+.editor {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  
+}
+
+.editor-pane {
+  font-size: 1.2em;
+  flex: 1;
+  overflow-y: auto;
+  margin-right: -20px;
+}
+
+.error-pane {
+  color: #ccc;
+  font-family: monospace;
+  max-height: 80px;
+  margin-right: -20px;
+  overflow-y: auto;
+}
+
+.error-pane h1 {
+  font-size: 1em;
+  margin: 0;
+}
+
+.error-pane ul {
+  margin: 0;
+  padding: 0;
+}
+
+.CodeMirror {
+  height: auto;
+}
+
+
+
+#header { 
+  height: 54px;
+  background: #E91E63;
+  display: block;
+}
+
+#header-inner {
+  display: flex;
+  flex-direction: row;
+  padding: 0 24px;
+}
+
+#logo {
+  margin: 0;
+  padding: 0;
+  
+  font-size: 28px;
+  line-height: 54px;
+  color: #ddd;
+}
+
+.console {
+  display: flex;
+  flex-direction: row;
+  margin-left: 24px;
+}
+
+.button {
+    border: 1px solid #fff;
+    border-radius: 3px;
+    background-color: #fff;
+    color: #E91E63;
+    height: 36px;
+    margin-top: 10px;
+    padding: 0px 24px;
+    outline: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+

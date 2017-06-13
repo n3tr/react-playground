@@ -80,8 +80,16 @@ export default class Editor extends React.Component {
   render() {
     return (
       <div className="editor">
-        <div className="console-pane">
-          <button onClick={this._executeCode}>Run</button>
+        <div id="header" className="console-pane">
+          <div id="header-inner">
+            <h1 id="logo">React Playground</h1>
+            <div className="console">
+              <button className="button" onClick={this._executeCode}>Run</button>
+            </div>
+
+            
+          </div>
+          
         </div>
         <div className="editor-pane">
           <CodeMirror
