@@ -82,6 +82,7 @@ body {
   display: flex;
   flex-direction: row;
   margin-left: 24px;
+  flex: 1;
 }
 
 .button {
@@ -98,3 +99,13 @@ body {
     font-weight: bold;
 }
 
+
+.social-bar { }
+
+.social-bar a {
+  color: #fff;
+  text-decoration: none;
+  height: 54px;
+  line-height: 54px;
+  display: block;
+}

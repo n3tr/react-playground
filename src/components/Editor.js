@@ -86,8 +86,9 @@ export default class Editor extends React.Component {
             <div className="console">
               <button className="button" onClick={this._executeCode}>Run</button>
             </div>
-
-            
+            <div className="social-bar">
+              <a href="https://github.com/n3tr/react-playground">Github</a>
+            </div>
           </div>
           
         </div>
