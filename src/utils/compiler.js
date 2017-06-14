@@ -1,7 +1,7 @@
 import * as Babel from "babel-standalone";
-import { appendLineNumber } from 'utils/babel-apply-line-number';
+import applyLineNumber from 'utils/babel-apply-line-number';
 
-Babel.registerPlugin('babel-apply-line-number', appendLineNumber);
+Babel.registerPlugin('babel-apply-line-number', applyLineNumber);
 
 export function compileCode(code, scope = {}) {
   const scopeKeys = Object.keys(scope).join(', ')
