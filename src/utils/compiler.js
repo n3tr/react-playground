@@ -5,7 +5,6 @@ Babel.registerPlugin('babel-apply-line-number', appendLineNumber);
 
 export function compileCode(code, scope = {}) {
   const scopeKeys = Object.keys(scope).join(', ')
-  console.log(scopeKeys)
   const compiled = Babel.transform(
     code,
     {
