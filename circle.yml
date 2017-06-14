@@ -1,0 +1,18 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: node:7.10.0
+    working_directory: ~/react-playground
+    steps:
+      - checkout
+      - add_ssh_keys
+      - run: |
+          yarn
+      - run: |
+          if [ "${CIRCLE_BRANCH}" == "master" ]
+          then
+            git config --global user.name "CircleCI" && git config --global user.email "circleci@spacet.me" && yarn run deploy
+          else
+            echo 'Not master branch, therefore not deploying ^_^'
+          fi
