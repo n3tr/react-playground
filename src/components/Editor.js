@@ -4,6 +4,7 @@ import CodeMirror from 'react-codemirror';
 import 'codemirror/mode/jsx/jsx';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/dracula.css';
+import 'codemirror/addon/edit/closebrackets.js';
 
 import { createIframe, addPreviewDiv } from 'utils/dom';
 import { compileAndExecute } from 'utils/compiler';
@@ -96,11 +97,11 @@ export default class Editor extends React.Component {
           <CodeMirror
             ref={(codemirror) => { this.codemirror = codemirror; }}
             value={this.state.code}
-            onChange={this.updateCode}
             options={{
               mode: 'jsx',
               lineNumbers: true,
-              theme: 'dracula'
+              theme: 'dracula',
+              autoCloseBrackets: true
             }} />
         </div>
         <div className="error-pane">

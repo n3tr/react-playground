@@ -27,7 +27,7 @@ body {
 }
 
 .editor-pane {
-  font-size: 1.2em;
+  font-size: 14px;
   flex: 1;
   overflow-y: auto;
   margin-right: -20px;
