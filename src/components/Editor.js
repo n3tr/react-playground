@@ -96,6 +96,7 @@ export default class Editor extends React.Component {
         <div className="editor-pane">
           <CodeMirror
             ref={(codemirror) => { this.codemirror = codemirror; }}
+            onChange={this.updateCode}
             value={this.state.code}
             options={{
               mode: 'jsx',
