@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import shallowEqual from 'fbjs/lib/shallowEqual';
 import PropTypes from 'prop-types';
 import { createIframe, addPreviewDiv } from 'utils/dom';
 
