@@ -1,1 +1,8 @@
-{ "root": "build/" }
+{ 
+  "root": "build/",
+  "redirects": {
+    "/react-playground/": {
+      "url": "/"
+    }
+  }
+}
