@@ -14,5 +14,6 @@ jobs:
           then
             git config --global user.name "Circle CI" && git config --global user.email "circleci@example.com" && yarn run deploy
           else
+            yarn run build
             echo 'Not master branch, therefore not deploying ^_^'
           fi
