@@ -1,8 +1,7 @@
 { 
   "root": "build/",
-  "redirects": {
-    "/react-playground/": {
-      "url": "/"
-    }
+  "routes": {
+    "/react-playground/*": "/",
+    "/**": "index.html"
   }
 }
