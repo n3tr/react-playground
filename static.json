@@ -1,7 +1,6 @@
 { 
   "root": "build/",
   "routes": {
-    "/react-playground/*": "/",
-    "/**": "index.html"
+    "/react-playground/*": "/"
   }
 }
