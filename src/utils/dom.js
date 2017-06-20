@@ -6,7 +6,7 @@ export function createIframe(onIframeLoad) {
   iframe.style.zIndex = 2147483647;
   iframe.style.margin = 0;
   iframe.style.padding = 0;
-  iframe.style.width = '98%';
+  iframe.style.width = '100%';
   iframe.onload = onIframeLoad;
   return iframe;
 }
@@ -19,10 +19,10 @@ export function addPreviewDiv(iframe) {
   outerDiv.style.height = '100%';
   outerDiv.style.boxSizing = 'border-box';
   outerDiv.style.position = 'relative';
-  outerDiv.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
-  outerDiv.style.padding = '12px';
-  outerDiv.style.borderRadius = '8px';
-  outerDiv.style.color = '#EEE';
+  outerDiv.style.backgroundColor = 'rgba(0, 0, 0, 0.2)';
+  outerDiv.style.padding = '12px 30px';
+  outerDiv.style.borderRadius = '4px';
+  outerDiv.style.color = '#fff';
 
 
   var div = iframe.contentDocument.createElement('div');
