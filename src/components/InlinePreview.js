@@ -9,7 +9,7 @@ export default class InlinePreview extends React.Component {
     if (!this.context.codemirror) {
       return;
     }
-    this._renderPreview(this.props);
+    this._renderPreview();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -22,40 +22,39 @@ export default class InlinePreview extends React.Component {
     }
 
     if (!this.mountNode || !this.previewIframe) {
-      this._renderPreview(nextProps);
-      return
+      this._renderPreview();
     }
 
-    this._renderIntoMountDom(nextProps.value);
+    this._renderIntoMountDom(nextProps);
   }
 
   _clearWidget() {
     this.mountNode = null;
+    this.previewIframe.onload = null
     this.previewIframe = null;
     if (this.lineWidget) {
       this.lineWidget.clear();
     }
   }
 
-  _renderPreview(props) {
+  _renderPreview() {
     const codeMirror = this.context.codemirror;
     const codeMirrorDocument = codeMirror.doc;
 
     this.previewIframe = createIframe(() => {
       this.mountNode = addPreviewDiv(this.previewIframe);
-      this._renderIntoMountDom(props.value);
+      this._renderIntoMountDom(this.props);
     })
 
     this.lineWidget = codeMirrorDocument.addLineWidget(
-      props.lineNumber - 1, this.previewIframe, { coverGutter: false }
+      this.props.lineNumber - 1, this.previewIframe, { coverGutter: true }
     )
-    this.lineWidget.changed();
   }
 
-  _renderIntoMountDom(value) {
+  _renderIntoMountDom(props) {
     try {
         this.previewIframe.height = 0;
-        ReactDOM.render(value, this.mountNode, () => {
+        ReactDOM.render(props.value, this.mountNode, () => {
           this.previewIframe.height = this.previewIframe.contentWindow.document.body.scrollHeight + 24;
         });
       } catch (error) {

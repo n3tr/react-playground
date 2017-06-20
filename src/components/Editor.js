@@ -5,9 +5,12 @@ import 'codemirror/mode/jsx/jsx';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/dracula.css';
 import 'codemirror/addon/edit/closebrackets.js';
+import 'codemirror/addon/scroll/simplescrollbars.css';
+import 'codemirror/addon/scroll/simplescrollbars.js';
 
 import template from 'template';
 import { compileAndExecute } from 'utils/compiler';
+import Header from 'components/Header';
 import InlinePreview from 'components/InlinePreview';
 
 
@@ -49,8 +52,7 @@ export default class Editor extends React.Component {
     const scope = { React: React }
     try {
       compileAndExecute(code, scope, run.bind(this));
-      this.lastScrollPositionTop = this.scroller.scrollTop
-      
+      this.lastScrollPosition = codeMirror.getScrollInfo();
       this.setState(() => {
         return {
           error: null,
@@ -65,47 +67,41 @@ export default class Editor extends React.Component {
   }
 
   componentDidMount() {
-    this.codemirror.getCodeMirror().setSize('100%', '100%');
-    this.codemirror.getCodeMirror().refresh();
+    
+    // this.codemirror.getCodeMirror().refresh();
   }
 
   componentDidUpdate() {
-
     // FIXME:
     // This is Hack to recover scroll position for after render preview
-    if (this.lastScrollPositionTop > -1) {
-      this.scroller.scrollTop = this.lastScrollPositionTop;
-      this.lastScrollPositionTop = -999;
+    if (this.lastScrollPosition) {
+      this.codemirror.getCodeMirror().scrollTo(this.lastScrollPosition.left, this.lastScrollPosition.top)
+      this.lastScrollPosition = null;
     }
   }
 
   render() {
     return (
-      <div className="editor">
-        <div id="header" className="console-pane">
-          <div id="header-inner">
-            <h1 id="logo">React Playground</h1>
-            <div className="console">
-              <button className="button" onClick={this._executeCode}>Run</button>
-            </div>
-            <div className="social-bar">
-              <a href="https://github.com/n3tr/react-playground">Github</a>
-            </div>
-          </div>
-          
-        </div>
-        <div className="editor-pane" ref={ scroller => this.scroller = scroller}>
-          <CodeMirror
-            ref={(codemirror) => { this.codemirror = codemirror; }}
-            onChange={this.updateCode}
-            value={this.state.code}
-            options={{
-              mode: 'jsx',
-              lineNumbers: true,
-              theme: 'dracula',
-              autoCloseBrackets: true
-            }} />
-            
+      <div className="playground-container">
+        <div className="playground-container-inner">
+          <header>
+            <Header onClickRun={this._executeCode} />
+          </header>
+        
+        <div className="playground-editor">
+            <CodeMirror
+              ref={(codemirror) => { this.codemirror = codemirror; }}
+              onChange={this.updateCode}
+              value={this.state.code}
+              options={{
+                mode: 'jsx',
+                lineNumbers: true,
+                theme: 'dracula',
+                autoCloseBrackets: true,
+                scrollbarStyle: "simple",
+                viewportMargin: Infinity
+                
+              }} />
         </div>
         
         <div className="error-pane">
@@ -125,6 +121,7 @@ export default class Editor extends React.Component {
             )
           })
         }
+        </div>
       </div>
     )
   }

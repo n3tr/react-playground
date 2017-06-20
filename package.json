@@ -8,7 +8,8 @@
     "codemirror": "^5.26.0",
     "react": "^15.5.4",
     "react-codemirror": "^1.0.0",
-    "react-dom": "^15.5.4"
+    "react-dom": "^15.5.4",
+    "styled-components": "^2.1.0"
   },
   "devDependencies": {
     "gh-pages": "^1.0.0",
