@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 import CodeMirror from 'react-codemirror';
+import styled from 'styled-components';
 import 'codemirror/mode/jsx/jsx';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/dracula.css';
@@ -49,7 +50,7 @@ export default class Editor extends React.Component {
     }
 
     const { code } = this.state;
-    const scope = { React: React }
+    const scope = { React: React, styled: styled }
     try {
       compileAndExecute(code, scope, run.bind(this));
       this.lastScrollPosition = codeMirror.getScrollInfo();
