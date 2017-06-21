@@ -5,26 +5,33 @@ export default `// -----
 const Hello = ({ name }) => <h1>Hello, { name }</h1>
 
 // Use run(...) for inline preview
-run(<Hello name="Net"/>)
+run(<Hello name="Playground"/>)
+
+
 
 // ------
-// Button
+// Styled-Component
 // ------
-const Button = ({ color = "red" }) => { 
-  const style = {
-  	backgroundColor: color,
-    padding: 12,
-    color: '#fff',
-    border: 'none',
-    borderRadius: 3,
-    fontSize: 16
+const Button = styled.button\`
+  font-size: 16px;
+  color: #fff;
+  background-color: #902934;
+  height: 36px;
+  min-width: 80px;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.1s ease;
+  
+
+  &:hover {
+    background-color: #802934;
   }
-  return <button style={style}>Button</button>
-}
+\`
 
+run(<Button>Click Me</Button>)
 
-run(<Button />)
-run(<Button color="blue"/>)
 
 
 // -------
