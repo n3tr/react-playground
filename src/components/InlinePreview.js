@@ -1,7 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import { createIframe, addPreviewDiv } from 'utils/dom';
+import { 
+  createInlinePreviewContainer, 
+  createInlinePreviewMountDom 
+} from 'utils/dom';
 
 
 export default class InlinePreview extends React.Component {
@@ -21,8 +24,9 @@ export default class InlinePreview extends React.Component {
       this._clearWidget();
     }
 
-    if (!this.mountNode || !this.previewIframe) {
+    if (!this.mountNode) {
       this._renderPreview();
+      return;
     }
 
     this._renderIntoMountDom(nextProps);
@@ -30,8 +34,6 @@ export default class InlinePreview extends React.Component {
 
   _clearWidget() {
     this.mountNode = null;
-    this.previewIframe.onload = null
-    this.previewIframe = null;
     if (this.lineWidget) {
       this.lineWidget.clear();
     }
@@ -41,28 +43,24 @@ export default class InlinePreview extends React.Component {
     const codeMirror = this.context.codemirror;
     const codeMirrorDocument = codeMirror.doc;
 
-    this.previewIframe = createIframe(() => {
-      this.mountNode = addPreviewDiv(this.previewIframe);
-      this._renderIntoMountDom(this.props);
-    })
+    const container = createInlinePreviewContainer()    
+    this.mountNode = createInlinePreviewMountDom()
+    container.appendChild(this.mountNode);
+    
+    this._renderIntoMountDom(this.props);
 
     this.lineWidget = codeMirrorDocument.addLineWidget(
-      this.props.lineNumber - 1, this.previewIframe, { coverGutter: true }
+      this.props.lineNumber - 1, container, { coverGutter: true }
     )
   }
 
   _renderIntoMountDom(props) {
     try {
-        this.previewIframe.height = 0;
-        ReactDOM.render(props.value, this.mountNode, () => {
-          this.previewIframe.height = this.previewIframe.contentWindow.document.body.scrollHeight + 24;
-        });
+        ReactDOM.render(props.value, this.mountNode);
       } catch (error) {
         console.error(error)
         // TODO: Display better error for each preview
-        ReactDOM.render(<div>{error.message}</div>, this.mountNode, () => {
-          this.previewIframe.height = this.previewIframe.contentWindow.document.body.scrollHeight + 24;
-        })
+        ReactDOM.render(<div>{error.message}</div>, this.mountNode)
       }
   }
 

@@ -32,6 +32,11 @@ body {
   border-color: transparent;
 }
 
+.CodeMirror-linewidget {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
 .ReactCodeMirror {
   flex: 1;
   display: flex;
