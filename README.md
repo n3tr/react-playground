@@ -2,7 +2,7 @@
 
 Xcode Playground but React.
 
-![](images/ss.gif)
+![](https://media.giphy.com/media/3ohzdObkK82qoDGrks/giphy.gif)
 
 
 ## Todo
