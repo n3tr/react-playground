@@ -1,5 +1,5 @@
 import * as Babel from "babel-standalone";
-import applyLineNumber from 'utils/babel-apply-line-number';
+import applyLineNumber from 'utils/babel-plugins/babel-inject-run-plugin';
 
 Babel.registerPlugin('babel-apply-line-number', applyLineNumber);
 
@@ -8,11 +8,11 @@ export function compileCode(code, scope = {}) {
   const compiled = Babel.transform(
     code,
     {
-      presets: ['es2015', 'stage-1', 'react'],
+      presets: ['es2015', 'react', 'stage-1'],
       plugins: ['babel-apply-line-number']
     }
   ).code
-  return `((${scopeKeys}, run) => { ${compiled} });`
+  return `((${scopeKeys}, __rpRun) => { ${compiled} });`
 }
 
 export function execute(code, scope, run) {
@@ -21,7 +21,8 @@ export function execute(code, scope, run) {
   eval(code).apply(null, args) // eslint-disable-line no-eval
 }
 
-export function compileAndExecute(code, scope, run) {
+export function compileAndExecute(code, scope, __rpRun) {
   const compiledCode = compileCode(code, scope)
-  execute(compiledCode, scope, run)
+  console.log(compiledCode);
+  execute(compiledCode, scope, __rpRun)
 }
