@@ -39,9 +39,10 @@ export default class Editor extends React.Component {
     const previewElements = [];
     let runCount = 0
     function run(element, line) {
-      const lineInfo = codeMirrorDocument.lineInfo(line - 1);
+      console.log(element)
+      const lineInfo = codeMirrorDocument.lineInfo(line.end - 1);
       previewElements.push({
-        lineNumber: line,
+        lineNumber: line.end,
         value: element,
         __text: lineInfo.text,
         __runRef: runCount

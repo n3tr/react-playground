@@ -2,11 +2,9 @@ export default `// -----
 // Hello
 // -----
 
-const Hello = ({ name }) => <h1>Hello, { name }</h1>
+const Hello = ({ name }) => <h1>Hello, { name }</h1>;
 
-// Use run(...) for inline preview
-run(<Hello name="Playground"/>)
-
+<Hello name="Playground"/>;
 
 
 // ------
@@ -28,10 +26,9 @@ const Button = styled.button\`
   &:hover {
     background-color: #802934;
   }
-\`
+\`;
 
-run(<Button>Click Me</Button>)
-
+<Button>Click Me</Button>;
 
 
 // -------
@@ -57,6 +54,6 @@ class Counter extends React.Component {
   }
 }
 
-run(<Counter />)
+<Counter />;
 
 `
