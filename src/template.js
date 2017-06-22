@@ -1,15 +1,21 @@
-export default `// -----
-// Hello
-// -----
+export default `// Babel-standalone: es2015, stage-1, react
+// Global Scope support: React, styled
 
-const Hello = ({ name }) => <h1>Hello, { name }</h1>;
-
-<Hello name="Playground"/>;
+const name = "David";
+name;
 
 
-// ------
+
+const Hello = ({ name }) => {
+  return <p>Hello, { name }</p>
+};
+
+<Hello name={name} />
+
+
+
 // Styled-Component
-// ------
+
 const Button = styled.button\`
   font-size: 16px;
   color: #fff;
@@ -31,9 +37,8 @@ const Button = styled.button\`
 <Button>Click Me</Button>;
 
 
-// -------
+
 // Counter
-// -------
 
 class Counter extends React.Component {
   state = { count: 0 }
@@ -55,5 +60,6 @@ class Counter extends React.Component {
 }
 
 <Counter />;
+
 
 `

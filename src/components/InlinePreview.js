@@ -6,6 +6,8 @@ import {
   createInlinePreviewMountDom 
 } from 'utils/dom';
 
+import Preview from './preview/Preview';
+
 
 export default class InlinePreview extends React.Component {
   componentDidMount() {
@@ -56,11 +58,11 @@ export default class InlinePreview extends React.Component {
 
   _renderIntoMountDom(props) {
     try {
-        ReactDOM.render(props.value, this.mountNode);
+        ReactDOM.render(<Preview value={props.value} />, this.mountNode);
       } catch (error) {
         console.error(error)
         // TODO: Display better error for each preview
-        ReactDOM.render(<div>{error.message}</div>, this.mountNode)
+        ReactDOM.render(<Preview value={error} />, this.mountNode)
       }
   }
 

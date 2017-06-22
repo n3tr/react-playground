@@ -18,7 +18,12 @@ export function compileCode(code, scope = {}) {
 export function execute(code, scope, run) {
   const args = Object.keys(scope).map( key => scope[key] )
   args.push(run)
-  eval(code).apply(null, args) // eslint-disable-line no-eval
+  try {
+    eval(code).apply(null, args) // eslint-disable-line no-eval  
+  } catch (error) {
+    throw error
+  }
+  
 }
 
 export function compileAndExecute(code, scope, __rpRun) {
