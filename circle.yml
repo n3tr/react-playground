@@ -10,6 +10,8 @@ jobs:
       - run: |
           yarn
       - run: |
+          yarn run test
+      - run: |
           if [ "${CIRCLE_BRANCH}" == "master" ]
           then
             git config --global user.name "Circle CI" && git config --global user.email "circleci@example.com" && yarn run deploy
