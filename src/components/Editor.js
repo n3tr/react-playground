@@ -68,7 +68,11 @@ export default class Editor extends React.Component {
   }
 
   componentDidMount() {
-    
+    // cmd + enter => run
+    const cmdEnterKeymap = { "Cmd-Enter": (cm) => {
+      this._executeCode();
+    }}
+    this.codemirror.getCodeMirror().addKeyMap(cmdEnterKeymap)
     // this.codemirror.getCodeMirror().refresh();
   }
 

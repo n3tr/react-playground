@@ -1,11 +1,12 @@
-## React Playground
+## React Playground [**EXPERIMENT**]
 
-**EXPERIMENT** Xcode Playground but React.
+Xcode Playground but React.
 
 ![](images/ss.gif)
 
 
 ## Todo
 
-- Support for Redux, Styled-Component.
-- Allow expression to show inline component instead of `run` function.
+- Support for Redux
+- Prettier
+- Display Better Error

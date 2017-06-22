@@ -28,6 +28,5 @@ export function execute(code, scope, run) {
 
 export function compileAndExecute(code, scope, __rpRun) {
   const compiledCode = compileCode(code, scope)
-  console.log(compiledCode);
   execute(compiledCode, scope, __rpRun)
 }

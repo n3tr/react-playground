@@ -6,7 +6,6 @@ export default class Preview extends React.Component {
 
   _renderPreview() {
     const { value } = this.props;
-    console.log(value);
     if (!value || typeof value === 'undefined') {
       return null;
     }
