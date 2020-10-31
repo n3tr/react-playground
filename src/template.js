@@ -2,7 +2,7 @@ export default `// Babel-standalone: es2015, stage-1, react
 // Global Scope support: React, styled
 
 const name = "David";
-name;
+render(name);
 
 
 
@@ -10,7 +10,7 @@ const Hello = ({ name }) => {
   return <p>Hello, { name }</p>
 };
 
-<Hello name={name} />
+render(<Hello name={name} />);
 
 
 
@@ -34,7 +34,7 @@ const Button = styled.button\`
   }
 \`;
 
-<Button>Click Me</Button>;
+render(<Button>Click Me</Button>);
 
 
 
@@ -59,7 +59,7 @@ class Counter extends React.Component {
   }
 }
 
-<Counter />;
+render(<Counter />);
 
 
 `
