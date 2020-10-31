@@ -40,26 +40,24 @@ render(<Button>Click Me</Button>);
 
 // Counter
 
-class Counter extends React.Component {
-  state = { count: 0 }
-  increase = () => {
-	this.setState({ count: this.state.count + 1 })
+const Counter = () => {
+  const [count, setCount] = React.useState(0)
+  const increase = () => {
+    setCount(count + 1)
   }
-  decrease = () => {
-    this.setState({ count: this.state.count - 1 })
+  const decrease = () => {
+    setCount(count - 1)
   }
-  render() {
-    return (
-      <div>
-        <div><h1>{ this.state.count }</h1></div>
-        <button onClick={this.decrease}>-</button>
-        <button onClick={this.increase}>+</button>
-      </div>
-    )
-  }
+  return (
+    <div>
+      <div><h1>{ count }</h1></div>
+      <button onClick={decrease}>-</button>
+      <button onClick={increase}>+</button>
+    </div>
+  )
 }
 
 render(<Counter />);
 
 
-`
+`;

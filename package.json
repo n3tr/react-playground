@@ -6,10 +6,10 @@
   "dependencies": {
     "babel-standalone": "^6.25.0",
     "codemirror": "^5.26.0",
-    "react": "^15.5.4",
+    "react": "16.14.0",
     "react-codemirror": "^1.0.0",
-    "react-dom": "^15.5.4",
-    "styled-components": "^2.1.0"
+    "react-dom": "16.14.0",
+    "styled-components": "^5.2.1"
   },
   "devDependencies": {
     "babel-plugin-tester": "^3.1.0",

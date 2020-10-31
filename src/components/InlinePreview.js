@@ -17,7 +17,7 @@ export default class InlinePreview extends React.Component {
     this._renderPreview();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.value === this.props.value) {
       return
     }
@@ -66,7 +66,7 @@ export default class InlinePreview extends React.Component {
       }
   }
 
-  componentWillUnmount() {
+  UNSAFE_componentWillMount() {
     this._clearWidget();
   }
 
@@ -75,9 +75,9 @@ export default class InlinePreview extends React.Component {
   }
 }
 
-InlinePreview.PropTypes = {
+InlinePreview.propTypes = {
   lineNumber: PropTypes.number.isRequired,
-  value: PropTypes.object.isRequired
+  value: PropTypes.oneOfType([PropTypes.object, PropTypes.string]).isRequired
 }
 
 InlinePreview.contextTypes = {
