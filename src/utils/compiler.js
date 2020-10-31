@@ -1,4 +1,4 @@
-import * as Babel from "babel-standalone";
+import * as Babel from "@babel/standalone";
 import applyLineNumber from 'utils/babel-apply-line-number';
 
 Babel.registerPlugin('babel-apply-line-number', applyLineNumber);
@@ -8,7 +8,7 @@ export function compileCode(code, scope = {}) {
   const compiled = Babel.transform(
     code,
     {
-      presets: ['es2015', 'react', 'stage-1'],
+      presets: ['env', 'react'],
       plugins: ['babel-apply-line-number']
     }
   ).code
