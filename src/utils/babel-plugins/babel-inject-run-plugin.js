@@ -11,7 +11,7 @@ export default function babelInjectRunPlugin({ types: t }) {
 
           const { start, end } = child.loc;
           const newPath = t.callExpression(
-            t.identifier('__rpRun'), 
+            t.identifier('run'), 
             [
               child.expression, 
               t.objectExpression([
