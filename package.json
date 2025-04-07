@@ -1,6 +1,5 @@
 {
   "name": "react-playground",
-  "homepage": "https://n3tr.github.io/react-playground",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
